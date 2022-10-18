@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -46,6 +47,7 @@ class PostsAdapter(private val context: Context, private val posts: ArrayList<Po
         val tvUser: TextView = itemView.findViewById(R.id.post_user)
         val tvDescription: TextView = itemView.findViewById(R.id.post_description)
         val tvTimeSince: TextView = itemView.findViewById(R.id.post_time)
+        val ivProfileImage: ImageView = itemView.findViewById(R.id.post_user_profile_image)
 
         fun bind(post: Post) {
             tvUser.text = post.getUser()?.username
@@ -55,6 +57,8 @@ class PostsAdapter(private val context: Context, private val posts: ArrayList<Po
             tvTimeSince.text = time
 
             Glide.with(itemView.context).load(post.getImage()?.url).into(ivPostImage)
+            Log.i(TAG, post.getImage()?.url.toString())
+            Glide.with(itemView.context).load(post.getUser()?.getParseFile("profileImage")?.url).circleCrop().into(ivProfileImage)
         }
     }
 
